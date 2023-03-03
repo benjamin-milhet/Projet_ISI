@@ -22,15 +22,25 @@ SELECT DISTINCT(article_journaliste.journaliste_id) FROM article_journaliste INN
 SELECT DISTINCT(article_journaliste.journaliste_id) FROM article_journaliste INNER JOIN articles_tech ON article_journaliste.article_id = articles_tech.id_article WHERE articles_tech.rubrique = 'tech' ORDER BY article_journaliste.journaliste_id;
 
 CREATE TABLE nb_articles_par_rubrique AS 
-SELECT rubrique.nom as nomrubrique, COUNT(article.id) as nbArticle 
-FROM rubrique INNER JOIN article ON article.rubrique_id = rubrique.id 
-GROUP BY rubrique.nom;
+SELECT article.rubrique_id as nomrubrique, COUNT(article.id) as nbArticle 
+FROM article
+GROUP BY article.rubrique_id;
 
-/* Ne marche pas */
 CREATE TRIGGER updateTableInsert
-AFTER INSERT OR UPDATE OR DELETE
-ON article FOR EACH ROW
-UPDATE nb_articles_par_rubrique SET nomrubrique,nbArticle AS SELECT rubrique.nom as nomrubrique, COUNT(article.id) as nbArticle 
-FROM rubrique INNER JOIN article ON article.rubrique_id = rubrique.id 
-GROUP BY rubrique.nom; 
+AFTER INSERT
+ON article
+BEGIN
+UPDATE nb_articles_par_rubrique SET nbArticle=nbArticle+1 WHERE nb_articles_par_rubrique.nomrubrique = new.rubrique_id;
+END;
 
+CREATE TRIGGER updateTableDelete
+AFTER DELETE
+ON article
+BEGIN
+UPDATE nb_articles_par_rubrique SET nbArticle=nbArticle-1 WHERE nb_articles_par_rubrique.nomrubrique = old.rubrique_id;
+END;
+
+SELECT * FROM nb_articles_par_rubrique;
+
+INSERT INTO article VALUES(8899, "test", 2);
+DELETE FROM article WHERE article.id = 8899;
