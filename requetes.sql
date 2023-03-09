@@ -44,3 +44,26 @@ SELECT * FROM nb_articles_par_rubrique;
 
 INSERT INTO article VALUES(8899, "test", 2);
 DELETE FROM article WHERE article.id = 8899;
+
+
+SELECT journaliste.nom, COUNT(article_journaliste.article_id) FROM journaliste INNER JOIN article_journaliste ON article_journaliste.journaliste_id = journaliste.id WHERE article_journaliste.article_id IN (SELECT article.id FROM article INNER JOIN article_journaliste ON article_journaliste.article_id = article.id GROUP BY article.id HAVING COUNT(article_journaliste.journaliste_id) = 1) GROUP BY journaliste.nom;
+
+SELECT article.id FROM article INNER JOIN article_journaliste ON article_journaliste.article_id = article.id GROUP BY article.id HAVING COUNT(article_journaliste.journaliste_id) = 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
