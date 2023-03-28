@@ -50,7 +50,7 @@ SELECT journaliste.nom, COUNT(article_journaliste.article_id) FROM journaliste I
 
 SELECT article.id FROM article INNER JOIN article_journaliste ON article_journaliste.article_id = article.id GROUP BY article.id HAVING COUNT(article_journaliste.journaliste_id) = 0;
 
-
+PRAGMA foreign_keys = ON;
 
 
 
