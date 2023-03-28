@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS TABLE_NAME (column_name datatype, column_name datatyp
 
 DROP TABLE [IF EXISTS] [schema_name.]table_name;
 
-
+PRAGMA case_sensitive_like = true;
 
 
 
