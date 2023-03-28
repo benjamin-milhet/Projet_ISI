@@ -52,6 +52,7 @@ SELECT article.id FROM article INNER JOIN article_journaliste ON article_journal
 
 PRAGMA foreign_keys = ON;
 
+CREATE TABLE IF NOT EXISTS TABLE_NAME (column_name datatype, column_name datatype);
 
 
 
