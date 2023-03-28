@@ -85,5 +85,6 @@ CREATE TABLE rubrique (
   nom TEXT NOT NULL
 );
 
+SELECT * FROM journaliste LIMIT 5;
 
 
